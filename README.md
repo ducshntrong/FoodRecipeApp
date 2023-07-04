@@ -1,4 +1,4 @@
-ơi# FoodRecipeApp
+# FoodRecipeApp
 FoodRecipeApp is an app that makes making food easier and gives you full information about the selected meal including instructions of how to make that meal provided by a video.
 
 🍱 A Food Recipes App using Kotlin &amp; API (https://www.themealdb.com/api.php) to view food blogs along with their recipes.
