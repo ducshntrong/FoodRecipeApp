@@ -6,6 +6,59 @@ FoodRecipeApp is an app that makes making food easier and gives you full informa
 # Preview
 download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/file
 
+<table style="width:100%">
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/img1.jpg"/></td>
+    <td><img src="screenshots/img2.jpg"/></td>
+    <td><img src="screenshots/img3.jpg"/></td>
+    <td><img src="screenshots/img4.jpg"/></td>
+  </tr>
+  
+ <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/img5.jpg"/></td>
+    <td><img src="screenshots/img6.jpg"/></td>
+    <td><img src="screenshots/img7.jpg"/></td>
+    <td><img src="screenshots/img8.jpg"/></td>
+  </tr>
+  
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/img9.jpg"/></td>
+    <td><img src="screenshots/img10.jpg"/></td>
+    <td><img src="screenshots/img11.jpg"/></td>
+    <td><img src="screenshots/img12.jpg"/></td>
+  </tr>
+
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/img13.jpg"/></td>
+    <td><img src="screenshots/img14.jpg"/></td>
+    <td><img src="screenshots/img15.jpg"/></td>
+
+  </tr>
+</table>
+
 # Libraries and technologies used
 - Navigation component : one activity contains multiple fragments instead of creating multiple activites.
 - Retrofit : making HTTP connection with the rest API and convert meal json file to Kotlin/Java object.
