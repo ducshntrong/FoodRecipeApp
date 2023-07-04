@@ -68,4 +68,4 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
 - Coroutines : do some code in the background.
 - view binding : instead of inflating views manually view binding will take care of that.
 - Glide : Catch images and load them in imageView.
-- Firebase : User can register an account, CRUD
+- Firebase : User can register an account, CRUD recipes
