@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/crd_dinner_view"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="15dp"
+    app:cardUseCompatPadding="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_popular_meal"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/mealtest" />
+
+        <TextView
+            android:id="@+id/tvDinnerRecipe"
+            style="@style/text3"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="recipe name"
+            android:textSize="15sp" />
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>

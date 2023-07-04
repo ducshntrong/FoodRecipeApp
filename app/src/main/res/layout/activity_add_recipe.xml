@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/grey_top_corned_back"
+    tools:context=".activity.AddRecipeActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/back"
+            app:navigationIcon="@drawable/ic_back">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    style="@style/text"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:text="Add your recipe"/>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/back3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/upload_img_card"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="10dp"
+                android:layout_height="170dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/recipe_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_upload_photo" />
+                    <ImageView
+                        android:id="@+id/upload_image_btn"
+                        android:layout_width="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_camera_24"
+                        android:layout_height="24dp"
+                        android:elevation="50dp"
+                        app:tint="@color/black" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtRecipeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    style="@style/back2"
+                    android:ems="10"
+                    android:hint="Type Your Recipe Name"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="8dp" />
+
+
+                <EditText
+                    android:id="@+id/edtArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    style="@style/back2"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="8dp"
+                    android:hint="Type Country" />
+
+                <EditText
+                    android:id="@+id/edtYoutube"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    style="@style/back2"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="8dp"
+                    android:hint="Link Youtube (If any)" />
+
+                <EditText
+                    android:id="@+id/edtIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/back2"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:lines="3"
+                    android:padding="6dp"
+                    android:hint="Type Ingredient"
+                    android:inputType="textMultiLine"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"/>
+
+                <EditText
+                    android:id="@+id/edtInstructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/back2"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:lines="5"
+                    android:padding="6dp"
+                    android:hint="Type Description"
+                    android:inputType="textMultiLine"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"/>
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAdd"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/red_btn_back"
+                style="@android:style/Widget.Button"
+                android:layout_marginTop="10dp"
+                android:text="Add"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="27sp"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

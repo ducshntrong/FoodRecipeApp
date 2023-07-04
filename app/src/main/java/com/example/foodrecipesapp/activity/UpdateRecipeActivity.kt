@@ -1,0 +1,140 @@
+package com.example.foodrecipesapp.activity
+
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Base64
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.foodrecipesapp.R
+import com.example.foodrecipesapp.data.MealDB
+import com.example.foodrecipesapp.databinding.ActivityUpdateRecipeBinding
+import com.example.foodrecipesapp.fragments.MyRecipeFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import java.io.ByteArrayOutputStream
+
+class UpdateRecipeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityUpdateRecipeBinding
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+    lateinit var bundle: Bundle
+    lateinit var recipe: MealDB
+    var sImage: String? = ""
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityUpdateRecipeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbarDetail)
+        assert(supportActionBar != null)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        bundle = intent.extras!!
+        recipe = bundle.getParcelable("recipe")!!
+
+        auth = FirebaseAuth.getInstance()
+        dbRef = FirebaseDatabase.getInstance().
+            getReference("users/${auth.currentUser?.uid}/recipes").child(recipe.idMeal!!)
+
+
+        setView(recipe)
+        binding.btnUpdate.setOnClickListener {
+            updateData(recipe.idMeal!!,binding.edtArea.text.toString(),
+                binding.edtInstructions.text.toString(),binding.edtRecipeName.text.toString(),
+                binding.edtIngredients.text.toString(),binding.edtYoutube.text.toString())
+        }
+        binding.uploadImageBtn.setOnClickListener {
+            selectImage()
+        }
+        binding.edtIngredients.setOnTouchListener { view, event ->
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
+        binding.edtInstructions.setOnTouchListener { view, event ->
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
+    }
+
+    private fun updateData(idMeal: String, strArea: String,
+                           strInstructions: String, strMeal: String,
+                           strIngredients: String, strYoutube: String) {
+        if (sImage!!.isEmpty()){
+            val recipe = MealDB(idMeal,strArea,strInstructions,strMeal,
+                        recipe.strMealThumb,strIngredients,strYoutube)
+            dbRef.setValue(recipe)
+        }else{
+            val recipe = MealDB(idMeal,strArea,strInstructions,strMeal,
+                sImage,strIngredients,strYoutube)
+            dbRef.setValue(recipe)
+        }
+            .addOnCompleteListener {
+                Toast.makeText(this, "Update successfully", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener{ err ->
+                Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+    private fun setView(recipe: MealDB) {
+        binding.edtRecipeName.setText(recipe.strMeal)
+        binding.edtArea.setText(recipe.strArea)
+        binding.edtYoutube.setText(recipe.strYoutube)
+        binding.edtIngredients.setText(recipe.strIngredients)
+        binding.edtInstructions.setText(recipe.strInstructions)
+
+        val bytes = Base64.decode(recipe.strMealThumb, Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
+        binding.recipeImage.setImageBitmap(bitmap)
+    }
+
+    private fun selectImage(){
+        var myFileIntent = Intent(Intent.ACTION_GET_CONTENT)
+        myFileIntent.type = "image/*"
+        activityResultLauncher.launch(myFileIntent)
+    }
+
+    private val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ){result: ActivityResult ->
+        if (result.resultCode== RESULT_OK){
+            val uri = result.data!!.data
+            try {
+                val inputStream = contentResolver.openInputStream(uri!!)
+                val myBitmap = BitmapFactory.decodeStream(inputStream)
+                val stream = ByteArrayOutputStream()
+                myBitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream)
+                val bytes = stream.toByteArray()
+                sImage = Base64.encodeToString(bytes, Base64.DEFAULT)
+                binding.recipeImage.setImageBitmap(myBitmap)
+                inputStream!!.close()
+            }catch (ex:Exception){
+                Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
