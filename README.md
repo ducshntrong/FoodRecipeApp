@@ -14,10 +14,10 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img16.jpg"/></td>
     <td><img src="screenshots/img1.jpg"/></td>
     <td><img src="screenshots/img2.jpg"/></td>
     <td><img src="screenshots/img3.jpg"/></td>
-    <td><img src="screenshots/img4.jpg"/></td>
   </tr>
   
  <tr>
@@ -27,10 +27,10 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img4.jpg"/></td>
     <td><img src="screenshots/img5.jpg"/></td>
     <td><img src="screenshots/img6.jpg"/></td>
     <td><img src="screenshots/img7.jpg"/></td>
-    <td><img src="screenshots/img8.jpg"/></td>
   </tr>
   
   <tr>
@@ -40,10 +40,10 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img8.jpg"/></td>
     <td><img src="screenshots/img9.jpg"/></td>
     <td><img src="screenshots/img10.jpg"/></td>
     <td><img src="screenshots/img11.jpg"/></td>
-    <td><img src="screenshots/img12.jpg"/></td>
   </tr>
 
   <tr>
@@ -52,6 +52,7 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img12.jpg"/></td>
     <td><img src="screenshots/img13.jpg"/></td>
     <td><img src="screenshots/img14.jpg"/></td>
     <td><img src="screenshots/img15.jpg"/></td>
