@@ -4,7 +4,6 @@ FoodRecipeApp is an app that makes making food easier and gives you full informa
 🍱 A Food Recipes App using Kotlin &amp; API (https://www.themealdb.com/api.php) to view food blogs along with their recipes.
 
 # Preview
-download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/file
 
 <table style="width:100%">
   <tr>
@@ -14,10 +13,10 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img16.jpg"/></td>
     <td><img src="screenshots/img1.jpg"/></td>
     <td><img src="screenshots/img2.jpg"/></td>
     <td><img src="screenshots/img3.jpg"/></td>
-    <td><img src="screenshots/img4.jpg"/></td>
   </tr>
   
  <tr>
@@ -27,10 +26,10 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img4.jpg"/></td>
     <td><img src="screenshots/img5.jpg"/></td>
     <td><img src="screenshots/img6.jpg"/></td>
     <td><img src="screenshots/img7.jpg"/></td>
-    <td><img src="screenshots/img8.jpg"/></td>
   </tr>
   
   <tr>
@@ -40,10 +39,10 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img8.jpg"/></td>
     <td><img src="screenshots/img9.jpg"/></td>
     <td><img src="screenshots/img10.jpg"/></td>
     <td><img src="screenshots/img11.jpg"/></td>
-    <td><img src="screenshots/img12.jpg"/></td>
   </tr>
 
   <tr>
@@ -52,6 +51,7 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
     <th></th>
   </tr>
   <tr>
+    <td><img src="screenshots/img12.jpg"/></td>
     <td><img src="screenshots/img13.jpg"/></td>
     <td><img src="screenshots/img14.jpg"/></td>
     <td><img src="screenshots/img15.jpg"/></td>
@@ -67,4 +67,4 @@ download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/
 - Coroutines : do some code in the background.
 - view binding : instead of inflating views manually view binding will take care of that.
 - Glide : Catch images and load them in imageView.
-- Firebase : User can register an account, CRUD
+- Firebase : User can register an account, recipes CRUD
