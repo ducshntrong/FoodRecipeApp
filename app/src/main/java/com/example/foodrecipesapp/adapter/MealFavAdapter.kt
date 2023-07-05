@@ -43,14 +43,14 @@ class MealFavAdapter: RecyclerView.Adapter<MealFavAdapter.MealFavViewHolder>() {
     override fun onBindViewHolder(holder: MealFavViewHolder, position: Int) {
         holder.itemView.apply {
             holder.tv_meal_name.text = favList[position].strMeal
-//            Glide.with(holder.itemView).load(favList[position].strMealThumb).into(holder.imgFav)
-            if (favList[position].strMealThumb.contains("themealdb.com")){
-                Glide.with(holder.itemView).load(favList[position].strMealThumb).into(holder.imgFav)
-            }else{
-                val bytes = Base64.decode(favList[position].strMealThumb, Base64.DEFAULT)
-                val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
-                holder.imgFav.setImageBitmap(bitmap)
-            }
+            Glide.with(holder.itemView).load(favList[position].strMealThumb).into(holder.imgFav)
+//            if (favList[position].strMealThumb.contains("themealdb.com")){
+//                Glide.with(holder.itemView).load(favList[position].strMealThumb).into(holder.imgFav)
+//            }else{
+//                val bytes = Base64.decode(favList[position].strMealThumb, Base64.DEFAULT)
+//                val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
+//                holder.imgFav.setImageBitmap(bitmap)
+//            }
             holder.itemView.setOnClickListener {
                 onClick.onClick(position)
             }

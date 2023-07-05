@@ -14,11 +14,14 @@ import com.example.foodrecipesapp.databinding.FragmentMyRecipeBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class MyRecipeFragment : Fragment() {
     private lateinit var binding: FragmentMyRecipeBinding
     private lateinit var dbRef: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var storageRef: StorageReference
     private lateinit var ds: ArrayList<MealDB>
     lateinit var myRecipeAdapter: MyRecipeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +43,7 @@ class MyRecipeFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         dbRef = FirebaseDatabase.getInstance().getReference("users/${auth.currentUser?.uid}/recipes")
+        storageRef = FirebaseStorage.getInstance().getReference("Images")
 
         ds = arrayListOf<MealDB>()
         binding.recipeRecView.setHasFixedSize(true)
@@ -65,6 +69,7 @@ class MyRecipeFragment : Fragment() {
                 val dbRef2 = FirebaseDatabase.getInstance().
                     getReference("users/${auth.currentUser?.uid}/recipes").child(mealID)
                 dbRef2.removeValue()
+                storageRef.child(mealID).delete()
                 showDeleteSnackBar(mealID,meal)
             }
         }

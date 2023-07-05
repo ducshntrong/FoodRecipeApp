@@ -9,7 +9,7 @@ class MealDB(
     var strArea: String?= null,
     var strInstructions: String?= null,
     var strMeal: String?= null,
-    var strMealThumb: String?="",
+    var strMealThumb: String?=null,
     var strIngredients: String?= null,
     var strYoutube: String?= null
 ):Parcelable{

@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.ViewModel.DetailModel
 import com.example.foodrecipesapp.data.MealDB
@@ -19,6 +20,8 @@ import com.example.foodrecipesapp.databinding.ActivityDetailRecipeBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class DetailRecipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailRecipeBinding
@@ -26,6 +29,7 @@ class DetailRecipeActivity : AppCompatActivity() {
     private lateinit var recipe: MealDB
     private lateinit var dbRef: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var storageRef: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailRecipeBinding.inflate(layoutInflater)
@@ -43,7 +47,7 @@ class DetailRecipeActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         dbRef = FirebaseDatabase.getInstance().
         getReference("users/${auth.currentUser?.uid}/recipes").child(recipe.idMeal!!)
-
+        storageRef = FirebaseStorage.getInstance().getReference("Images")
 
         binding.tvYoutube.setOnClickListener {
             if (recipe.strYoutube!!.isEmpty() || !(recipe.strYoutube!!.contains("youtube.com"))){
@@ -82,6 +86,7 @@ class DetailRecipeActivity : AppCompatActivity() {
                 dbRef.removeValue()
                     .addOnSuccessListener {
                         Toast.makeText(context, "Delete successfully", Toast.LENGTH_SHORT).show()
+                        storageRef.child(recipe.idMeal!!).delete()//xoá img của recipe vừa xoá trong storage
                         finish()
                     }
                     .addOnFailureListener { err ->
@@ -161,9 +166,10 @@ class DetailRecipeActivity : AppCompatActivity() {
         binding.tvAreaInfo.text = "Area: "+meal.strArea
         binding.tvIngredients.text = meal.strIngredients
         binding.tvInstructions.text = meal.strInstructions
-        val bytes = Base64.decode(meal.strMealThumb, Base64.DEFAULT)
-        val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
-        binding.imgMealDetail.setImageBitmap(bitmap)
+//        val bytes = Base64.decode(meal.strMealThumb, Base64.DEFAULT)
+//        val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
+//        binding.imgMealDetail.setImageBitmap(bitmap)
+        Glide.with(applicationContext).load(meal.strMealThumb).into(binding.imgMealDetail)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

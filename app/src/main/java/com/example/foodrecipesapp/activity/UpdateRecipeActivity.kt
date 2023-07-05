@@ -4,14 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.data.MealDB
 import com.example.foodrecipesapp.databinding.ActivityUpdateRecipeBinding
@@ -19,6 +22,8 @@ import com.example.foodrecipesapp.fragments.MyRecipeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
 
 class UpdateRecipeActivity : AppCompatActivity() {
@@ -27,7 +32,9 @@ class UpdateRecipeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     lateinit var bundle: Bundle
     lateinit var recipe: MealDB
-    var sImage: String? = ""
+    private lateinit var storageRef: StorageReference
+    private var uri: Uri? = null
+//    var sImage: String? = ""
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +51,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         dbRef = FirebaseDatabase.getInstance().
             getReference("users/${auth.currentUser?.uid}/recipes").child(recipe.idMeal!!)
-
+        storageRef = FirebaseStorage.getInstance().getReference("Images")
 
         setView(recipe)
         binding.btnUpdate.setOnClickListener {
@@ -52,8 +59,17 @@ class UpdateRecipeActivity : AppCompatActivity() {
                 binding.edtInstructions.text.toString(),binding.edtRecipeName.text.toString(),
                 binding.edtIngredients.text.toString(),binding.edtYoutube.text.toString())
         }
+//        binding.uploadImageBtn.setOnClickListener {
+//            selectImage()
+//        }
+        val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){
+            binding.recipeImage.setImageURI(it)
+            if (it != null){
+                uri = it
+            }
+        }
         binding.uploadImageBtn.setOnClickListener {
-            selectImage()
+            pickImage.launch("image/*")
         }
         binding.edtIngredients.setOnTouchListener { view, event ->
             view.parent.requestDisallowInterceptTouchEvent(true)
@@ -74,22 +90,43 @@ class UpdateRecipeActivity : AppCompatActivity() {
     private fun updateData(idMeal: String, strArea: String,
                            strInstructions: String, strMeal: String,
                            strIngredients: String, strYoutube: String) {
-        if (sImage!!.isEmpty()){
-            val recipe = MealDB(idMeal,strArea,strInstructions,strMeal,
-                        recipe.strMealThumb,strIngredients,strYoutube)
-            dbRef.setValue(recipe)
-        }else{
-            val recipe = MealDB(idMeal,strArea,strInstructions,strMeal,
-                sImage,strIngredients,strYoutube)
-            dbRef.setValue(recipe)
+        binding.progressBar.visibility = View.VISIBLE
+        var meal: MealDB
+
+        if (uri != null){
+            storageRef.child(idMeal).putFile(uri!!)
+                .addOnSuccessListener{ task ->
+                    task.metadata!!.reference!!.downloadUrl
+                        .addOnSuccessListener { url ->
+                            val imgUri = url.toString()
+                            meal = MealDB(idMeal,strArea,strInstructions,strMeal,
+                                imgUri,strIngredients,strYoutube)
+                            dbRef.setValue(meal)
+                                .addOnCompleteListener {
+                                    Toast.makeText(this, "Update successfully", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                .addOnFailureListener{ err ->
+                                    Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            binding.progressBar.visibility = View.VISIBLE
+
+                        }
+                }
         }
-            .addOnCompleteListener {
-                Toast.makeText(this, "Update successfully", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            .addOnFailureListener{ err ->
-                Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
-            }
+        if (uri == null){
+            meal = MealDB(idMeal,strArea,strInstructions,strMeal,
+                recipe.strMealThumb,strIngredients,strYoutube)
+            dbRef.setValue(meal)
+                .addOnCompleteListener {
+                    Toast.makeText(this, "Update successfully", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener{ err ->
+                    Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
+                }
+            binding.progressBar.visibility = View.VISIBLE
+        }
     }
 
 
@@ -100,36 +137,38 @@ class UpdateRecipeActivity : AppCompatActivity() {
         binding.edtIngredients.setText(recipe.strIngredients)
         binding.edtInstructions.setText(recipe.strInstructions)
 
-        val bytes = Base64.decode(recipe.strMealThumb, Base64.DEFAULT)
-        val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
-        binding.recipeImage.setImageBitmap(bitmap)
+//        val bytes = Base64.decode(recipe.strMealThumb, Base64.DEFAULT)
+//        val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
+//        binding.recipeImage.setImageBitmap(bitmap)
+
+        Glide.with(this).load(recipe.strMealThumb).into(binding.recipeImage)
     }
 
-    private fun selectImage(){
-        var myFileIntent = Intent(Intent.ACTION_GET_CONTENT)
-        myFileIntent.type = "image/*"
-        activityResultLauncher.launch(myFileIntent)
-    }
-
-    private val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
-        ActivityResultContracts.StartActivityForResult()
-    ){result: ActivityResult ->
-        if (result.resultCode== RESULT_OK){
-            val uri = result.data!!.data
-            try {
-                val inputStream = contentResolver.openInputStream(uri!!)
-                val myBitmap = BitmapFactory.decodeStream(inputStream)
-                val stream = ByteArrayOutputStream()
-                myBitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream)
-                val bytes = stream.toByteArray()
-                sImage = Base64.encodeToString(bytes, Base64.DEFAULT)
-                binding.recipeImage.setImageBitmap(myBitmap)
-                inputStream!!.close()
-            }catch (ex:Exception){
-                Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+//    private fun selectImage(){
+//        var myFileIntent = Intent(Intent.ACTION_GET_CONTENT)
+//        myFileIntent.type = "image/*"
+//        activityResultLauncher.launch(myFileIntent)
+//    }
+//
+//    private val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+//        ActivityResultContracts.StartActivityForResult()
+//    ){result: ActivityResult ->
+//        if (result.resultCode== RESULT_OK){
+//            val uri = result.data!!.data
+//            try {
+//                val inputStream = contentResolver.openInputStream(uri!!)
+//                val myBitmap = BitmapFactory.decodeStream(inputStream)
+//                val stream = ByteArrayOutputStream()
+//                myBitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream)
+//                val bytes = stream.toByteArray()
+//                sImage = Base64.encodeToString(bytes, Base64.DEFAULT)
+//                binding.recipeImage.setImageBitmap(myBitmap)
+//                inputStream!!.close()
+//            }catch (ex:Exception){
+//                Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
