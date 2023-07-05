@@ -4,7 +4,6 @@ FoodRecipeApp is an app that makes making food easier and gives you full informa
 🍱 A Food Recipes App using Kotlin &amp; API (https://www.themealdb.com/api.php) to view food blogs along with their recipes.
 
 # Preview
-download apk app : https://www.mediafire.com/file/bo8i02hla8qg25n/app-debug.apk/file
 
 <table style="width:100%">
   <tr>
