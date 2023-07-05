@@ -66,9 +66,7 @@ class MyRecipeFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 val mealID = myRecipeAdapter.getIdByPosition(position)
                 val meal = myRecipeAdapter.getMealByPosition(position)
-                val dbRef2 = FirebaseDatabase.getInstance().
-                    getReference("users/${auth.currentUser?.uid}/recipes").child(mealID)
-                dbRef2.removeValue()
+                dbRef.child(mealID).removeValue()
                 storageRef.child(mealID).delete()
                 showDeleteSnackBar(mealID,meal)
             }
