@@ -11,15 +11,13 @@
         android:title="Favourites"
         android:icon="@drawable/baseline_favorite_24"/>
 
-
     <item android:id="@+id/placeholder"
         android:title="" />
 
     <item
         android:title="Categories"
         android:icon="@drawable/ic_category"
-        android:id="@+id/categoryFragment"
-        />
+        android:id="@+id/categoryFragment" />
 
     <item android:id="@+id/myRecipeFragment"
         android:title="My recipes"

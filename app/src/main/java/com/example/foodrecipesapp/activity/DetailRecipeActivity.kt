@@ -166,9 +166,6 @@ class DetailRecipeActivity : AppCompatActivity() {
         binding.tvAreaInfo.text = "Area: "+meal.strArea
         binding.tvIngredients.text = meal.strIngredients
         binding.tvInstructions.text = meal.strInstructions
-//        val bytes = Base64.decode(meal.strMealThumb, Base64.DEFAULT)
-//        val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
-//        binding.imgMealDetail.setImageBitmap(bitmap)
         Glide.with(applicationContext).load(meal.strMealThumb).into(binding.imgMealDetail)
     }
 

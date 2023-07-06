@@ -29,7 +29,6 @@ class AddRecipeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var storageRef: StorageReference
     private var uri: Uri? = null
-//    var mealImage: String? = ""
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +42,7 @@ class AddRecipeActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener {
             addRecipe()
         }
-//        binding.uploadImageBtn.setOnClickListener {
-//            selectImage()
-//        }
+
 
         val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){
             binding.recipeImage.setImageURI(it)
@@ -79,6 +76,8 @@ class AddRecipeActivity : AppCompatActivity() {
 
     private fun addRecipe() {
         binding.progressBar.visibility = View.VISIBLE
+        binding.backg.visibility = View.VISIBLE
+
         val nameRecipe = binding.edtRecipeName.text.toString()
         val area = binding.edtArea.text.toString()
         val yt = binding.edtYoutube.text.toString()
@@ -87,7 +86,6 @@ class AddRecipeActivity : AppCompatActivity() {
 
         val id = dbRef.push().key!!
         var recipe: MealDB
-//        val recipe = MealDB(id,area,instruction,nameRecipe,mealImage,ingredient,yt)
         uri?.let {
             storageRef.child(id).putFile(it)
                 .addOnSuccessListener{ task ->
@@ -106,6 +104,7 @@ class AddRecipeActivity : AppCompatActivity() {
                                     .addOnFailureListener{ err ->
                                         Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
                                     }
+                                binding.backg.visibility = View.GONE
                                 binding.progressBar.visibility = View.GONE
                             }
                         }
@@ -113,31 +112,6 @@ class AddRecipeActivity : AppCompatActivity() {
         }
 
     }
-//    private fun selectImage(){
-//        var myFileIntent = Intent(Intent.ACTION_GET_CONTENT)
-//        myFileIntent.type = "image/*"
-//        activityResultLauncher.launch(myFileIntent)
-//    }
-//
-//    private val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
-//        ActivityResultContracts.StartActivityForResult()
-//    ){result: ActivityResult ->
-//        if (result.resultCode== RESULT_OK){
-//            val uri = result.data!!.data
-//            try {
-//                val inputStream = contentResolver.openInputStream(uri!!)
-//                val myBitmap = BitmapFactory.decodeStream(inputStream)
-//                val stream = ByteArrayOutputStream()
-//                myBitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream)
-//                val bytes = stream.toByteArray()
-//                mealImage = Base64.encodeToString(bytes, Base64.DEFAULT)
-//                binding.recipeImage.setImageBitmap(myBitmap)
-//                inputStream!!.close()
-//            }catch (ex:Exception){
-//                Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()

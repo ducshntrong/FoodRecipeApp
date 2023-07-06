@@ -33,6 +33,8 @@ class ChangePassActivity : AppCompatActivity() {
                         val i = Intent(this, LoginActivity::class.java)
                         startActivity(i)
                         finish()
+                    }else{
+                        Toast.makeText(this, "Email is not registered!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

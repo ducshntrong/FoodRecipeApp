@@ -34,7 +34,6 @@ class UpdateRecipeActivity : AppCompatActivity() {
     lateinit var recipe: MealDB
     private lateinit var storageRef: StorageReference
     private var uri: Uri? = null
-//    var sImage: String? = ""
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +58,6 @@ class UpdateRecipeActivity : AppCompatActivity() {
                 binding.edtInstructions.text.toString(),binding.edtRecipeName.text.toString(),
                 binding.edtIngredients.text.toString(),binding.edtYoutube.text.toString())
         }
-//        binding.uploadImageBtn.setOnClickListener {
-//            selectImage()
-//        }
         val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){
             binding.recipeImage.setImageURI(it)
             if (it != null){
@@ -90,6 +86,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
     private fun updateData(idMeal: String, strArea: String,
                            strInstructions: String, strMeal: String,
                            strIngredients: String, strYoutube: String) {
+        binding.backg.visibility = View.VISIBLE
         binding.progressBar.visibility = View.VISIBLE
         var meal: MealDB
 
@@ -109,6 +106,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
                                 .addOnFailureListener{ err ->
                                     Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
                                 }
+                            binding.backg.visibility = View.VISIBLE
                             binding.progressBar.visibility = View.VISIBLE
 
                         }
@@ -125,6 +123,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
                 .addOnFailureListener{ err ->
                     Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
                 }
+            binding.backg.visibility = View.VISIBLE
             binding.progressBar.visibility = View.VISIBLE
         }
     }
@@ -136,39 +135,9 @@ class UpdateRecipeActivity : AppCompatActivity() {
         binding.edtYoutube.setText(recipe.strYoutube)
         binding.edtIngredients.setText(recipe.strIngredients)
         binding.edtInstructions.setText(recipe.strInstructions)
-
-//        val bytes = Base64.decode(recipe.strMealThumb, Base64.DEFAULT)
-//        val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
-//        binding.recipeImage.setImageBitmap(bitmap)
-
         Glide.with(this).load(recipe.strMealThumb).into(binding.recipeImage)
     }
 
-//    private fun selectImage(){
-//        var myFileIntent = Intent(Intent.ACTION_GET_CONTENT)
-//        myFileIntent.type = "image/*"
-//        activityResultLauncher.launch(myFileIntent)
-//    }
-//
-//    private val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
-//        ActivityResultContracts.StartActivityForResult()
-//    ){result: ActivityResult ->
-//        if (result.resultCode== RESULT_OK){
-//            val uri = result.data!!.data
-//            try {
-//                val inputStream = contentResolver.openInputStream(uri!!)
-//                val myBitmap = BitmapFactory.decodeStream(inputStream)
-//                val stream = ByteArrayOutputStream()
-//                myBitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream)
-//                val bytes = stream.toByteArray()
-//                sImage = Base64.encodeToString(bytes, Base64.DEFAULT)
-//                binding.recipeImage.setImageBitmap(myBitmap)
-//                inputStream!!.close()
-//            }catch (ex:Exception){
-//                Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()

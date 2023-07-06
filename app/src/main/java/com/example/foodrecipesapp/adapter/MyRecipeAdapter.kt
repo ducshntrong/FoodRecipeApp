@@ -58,9 +58,6 @@ class MyRecipeAdapter(val con: Context) : RecyclerView.Adapter<MyRecipeAdapter.M
             }
             holder.tvDesc.text = limitedDescription
             holder.txtStrMeal.text = mealsList[position].strMeal
-//            val bytes = Base64.decode(mealsList[position].strMealThumb, Base64.DEFAULT)
-//            val bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
-//            holder.imgMeal.setImageBitmap(bitmap)
             Glide.with(holder.itemView).load(mealsList[position].strMealThumb).into(holder.imgMeal)
 
             holder.itemView.setOnClickListener {
