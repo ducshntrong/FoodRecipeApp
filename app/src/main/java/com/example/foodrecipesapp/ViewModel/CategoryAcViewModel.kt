@@ -15,8 +15,7 @@ class CategoryAcViewModel:ViewModel() {
     private var mutableMeal = MutableLiveData<MealResponse>()
     //hàm lấy meal từ các category
     fun getMealsByCategory(category:String){
-        Retrofit.foodApi.getMealsByCategory(category).enqueue(object :
-            Callback<MealResponse> {
+        Retrofit.foodApi.getMealsByCategory(category).enqueue(object : Callback<MealResponse> {
             override fun onResponse(call: Call<MealResponse>, response: Response<MealResponse>) {
                 mutableMeal.value = response.body()
             }
