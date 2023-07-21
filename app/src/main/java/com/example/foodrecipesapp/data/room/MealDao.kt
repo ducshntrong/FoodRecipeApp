@@ -15,8 +15,8 @@ interface MealDao {
     @Delete
     suspend fun deleteFav(meal: MealDetail)
 
-    @Query("SELECT * FROM meal_information order by idMeal asc")
-    fun getAllSaveMeals(): LiveData<List<MealDetail>>
+    @Query("SELECT * FROM meal_information where idUser = :idUser order by idMeal asc")
+    fun getAllSaveMeals(idUser:String): LiveData<List<MealDetail>>
 
     @Query("DELETE FROM meal_information WHERE idMeal = :id")
     fun deleteMealById(id:String)

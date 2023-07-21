@@ -7,6 +7,7 @@ import com.example.foodrecipesapp.data.*
 import com.example.foodrecipesapp.data.room.MealDatabase
 import com.example.foodrecipesapp.data.room.MealRepository
 import com.example.foodrecipesapp.retrofit.Retrofit
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -15,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailModel(application: Application): AndroidViewModel(application) {
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val mutableMealDetail = MutableLiveData<MealDetail>()
     private val mutableMealBottomSheet = MutableLiveData<MealDetail>()
 
@@ -23,9 +25,13 @@ class DetailModel(application: Application): AndroidViewModel(application) {
     init {
         val mealDao = MealDatabase.getInstance(application).mealDao()
         repository = MealRepository(mealDao)
-        readAllMeal = repository.readAllMeal
+        readAllMeal = repository.getMealByIdUser(auth.currentUser?.uid.toString())
     }
-
+    fun getMealByIdUser(IdUser:String){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.getMealByIdUser(IdUser)
+        }
+    }
     fun insertFav(meal: MealDetail){
         viewModelScope.launch(Dispatchers.IO){
             repository.insertFav(meal)

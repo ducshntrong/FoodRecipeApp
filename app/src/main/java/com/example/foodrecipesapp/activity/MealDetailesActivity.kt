@@ -10,12 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.ViewModel.DetailModel
+import com.example.foodrecipesapp.data.MealDB
 import com.example.foodrecipesapp.data.MealDetail
 import com.example.foodrecipesapp.databinding.ActivityMealDetailesBinding
 import com.example.foodrecipesapp.fragments.HomeFragment.Companion.MEAL_ID
 import com.example.foodrecipesapp.fragments.HomeFragment.Companion.MEAL_STR
 import com.example.foodrecipesapp.fragments.HomeFragment.Companion.MEAL_THUMB
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 
 class MealDetailesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealDetailesBinding
@@ -24,13 +26,14 @@ class MealDetailesActivity : AppCompatActivity() {
     private var mealId = ""
     lateinit var meal: MealDetail
     private var meaToSave: MealDetail?=null
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealDetailesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showLoading()
-
+        auth = FirebaseAuth.getInstance()
         bundle = intent.extras!!
         mealId = bundle.getString(MEAL_ID)!!
         detailModel = ViewModelProvider(this)[DetailModel::class.java]
@@ -40,7 +43,7 @@ class MealDetailesActivity : AppCompatActivity() {
         detailModel.observeMealDetail().observe(this){
             setTextsInViews(it)
             stopLoading()
-            meaToSave = it
+            meal = it
         }
 
         binding.imgToolbarBtnBack.setOnClickListener {
@@ -59,18 +62,21 @@ class MealDetailesActivity : AppCompatActivity() {
                     "Meal was deleted",
                     Snackbar.LENGTH_SHORT).show()
             }else{
-                meaToSave?.let { it ->
-                    detailModel.insertFav(it)
-                    binding.btnSave.setImageResource(R.drawable.ic_saved)
-                    Snackbar.make(
-                        findViewById(android.R.id.content),
-                        "Meal saved",
-                        Snackbar.LENGTH_SHORT).show()
-                }
+                saveMeal()
+                binding.btnSave.setImageResource(R.drawable.ic_saved)
+                Snackbar.make(
+                    findViewById(android.R.id.content),
+                    "Meal saved",
+                    Snackbar.LENGTH_SHORT).show()
             }
         }
     }
+    private fun saveMeal() {
+        val meal = MealDetail(meal.idMeal,auth.currentUser?.uid.toString(),meal.strArea,meal.strCategory,
+            meal.strInstructions, meal.strMeal,meal.strMealThumb,meal.strYoutube)
 
+        detailModel.insertFav(meal)
+    }
     //cập nhật trạng thái của nút lưu trữ bữa ăn (binding.btnSave) trên giao diện người dùng.
     private fun setFloatingButtonStatues() {
         if(detailModel.isMealSavedInDatabase(mealId)){

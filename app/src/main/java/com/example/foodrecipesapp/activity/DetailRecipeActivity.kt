@@ -103,7 +103,8 @@ class DetailRecipeActivity : AppCompatActivity() {
                 val recipe2 = snapshot.getValue(MealDB::class.java)
                 if (recipe2 != null) {//ktr nếu dữ liệu có trong db
                     setTextInView(recipe2)
-                    val meal = MealDetail(recipe2.idMeal!!,recipe2.strArea!!,recipe2.strIngredients!!,
+                    val meal = MealDetail(recipe2.idMeal!!,auth.currentUser?.uid.toString(),
+                        recipe2.strArea!!,recipe2.strIngredients!!,
                         recipe2.strInstructions!!, recipe2.strMeal!!,recipe2.strMealThumb!!,recipe2.strYoutube!!)
                     if(detailModel.isMealSavedInDatabase(recipe2.idMeal!!)){
                         detailModel.updateFav(meal)
@@ -143,7 +144,7 @@ class DetailRecipeActivity : AppCompatActivity() {
     private fun saveMeal() {
         val bundle = intent.extras!!
         recipe = bundle.getParcelable("recipe")!!
-        val recipe = MealDetail(recipe.idMeal!!,recipe.strArea!!,recipe.strIngredients!!,
+        val recipe = MealDetail(recipe.idMeal!!,auth.currentUser?.uid.toString(),recipe.strArea!!,recipe.strIngredients!!,
                         recipe.strInstructions!!, recipe.strMeal!!,recipe.strMealThumb!!,recipe.strYoutube!!)
 
         detailModel.insertFav(recipe)
