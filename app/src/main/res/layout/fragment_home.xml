@@ -39,39 +39,53 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="10dp"
+
                     android:layout_marginEnd="20dp"
                     android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/tv_home"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/myfont"
-                            android:text="Home"
-                            android:textColor="@color/accent"
-                            android:textSize="25sp"
-                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/img_logout"
+                            android:layout_width="32dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_gravity="right"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/baseline_logout_24" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
                             android:orientation="vertical">
-                            <ImageView
-                                android:id="@+id/img_logout"
-                                android:layout_width="32dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="right"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/baseline_logout_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="1dp"
+                                android:text="Hello, Food lovers!"
+                                style="@style/text"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/quotes"
+                                android:textSize="24dp"
+                                style="@style/text"
+                                android:textStyle="bold" />
+
                         </LinearLayout>
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/materialCardView"

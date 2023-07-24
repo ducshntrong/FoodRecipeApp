@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Kích thước ảnh khi xoay dọc -->
+    <dimen name="image_width_portrait_cate">150dp</dimen>
+    <dimen name="image_height_portrait_cate">155dp</dimen>
+
+    <dimen name="image_width_portrait_cate2">160dp</dimen>
+    <dimen name="image_height_portrait_cate2">130dp</dimen>
+
+    <dimen name="image_width_portrait_mealCard">179dp</dimen>
+    <dimen name="image_height_portrait_mealCard">220dp</dimen>
+
+    <dimen name="image_width_portrait_fav">180dp</dimen>
+    <dimen name="image_height_portrait_fav">180dp</dimen>
+
+    <!-- Kích thước ảnh khi xoay ngang -->
+    <dimen name="image_width_landscape">340dp</dimen>
+    <dimen name="image_height_landscape">340dp</dimen>
+</resources>

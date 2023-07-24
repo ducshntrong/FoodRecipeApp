@@ -1,16 +1,19 @@
 package com.example.foodrecipesapp.fragments
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.ViewModel.DetailModel
 import com.example.foodrecipesapp.activity.DetailRecipeActivity
 import com.example.foodrecipesapp.activity.MealDetailesActivity
@@ -94,6 +97,23 @@ class FavoriteMealsFragment : Fragment() {
             }
         }
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.favRecView)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Xác định kích thước mới của hình ảnh khi xoay ngang
+            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape)
+            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape)
+            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+            mealFavAdapter.setSize(newImageWidth, newImageHeight)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Xác định kích thước mới của hình ảnh khi xoay dọc
+            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_portrait_fav)
+            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_portrait_fav)
+            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+            mealFavAdapter.setSize(newImageWidth, newImageHeight)
+        }
     }
 
     private fun sendData2(pos: Int, it: List<MealDetail>) {

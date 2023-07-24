@@ -42,7 +42,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.CategoriesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true">
@@ -55,7 +56,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
     </application>
 
 </manifest>

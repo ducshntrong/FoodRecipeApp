@@ -12,10 +12,18 @@ import com.example.foodrecipesapp.data.Category
 
 class CategoryAdapter(private var listCate: List<Category>, val onClickItem: OnClickCategory):
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+    private var imageWidth: Int = 413
+    private var imageHeight: Int = 426
+    fun setSize(width: Int, height: Int){
+        imageWidth = width
+        imageHeight = height
+        notifyDataSetChanged()
+    }
     fun setCategoryList(listCate: List<Category>){
         this.listCate = listCate
         notifyDataSetChanged()
     }
+
     class CategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val txtCateName = itemView.findViewById<TextView>(R.id.tvCategoryName)
         val CateImg = itemView.findViewById<ImageView>(R.id.img_meal)
@@ -38,6 +46,11 @@ class CategoryAdapter(private var listCate: List<Category>, val onClickItem: OnC
         holder.itemView.apply {
             holder.txtCateName.text = listCate[position].strCategory
             Glide.with(holder.itemView).load(listCate[position].strCategoryThumb).into(holder.CateImg)
+
+            val layoutParams = holder.CateImg.layoutParams
+            layoutParams.width = imageWidth
+            layoutParams.height = imageHeight
+            holder.CateImg.layoutParams = layoutParams
 
             holder.itemView.setOnClickListener {
                 onClickItem.onClickCate(position)

@@ -13,6 +13,13 @@ import com.example.foodrecipesapp.data.Meal
 class MealsAdapter(private var list: List<Meal>, val onClick: OnClickMeal)
     :RecyclerView.Adapter<MealsAdapter.MealViewHolder>(){
     private lateinit var onLongClick: OnLongClickMeal
+    private var imageWidth: Int = 492
+    private var imageHeight: Int = 605
+    fun setSize(width: Int, height: Int){
+        imageWidth = width
+        imageHeight = height
+        notifyDataSetChanged()
+    }
     fun setOnLongClickMeal(onLongClick: OnLongClickMeal){
         this.onLongClick = onLongClick
     }
@@ -34,6 +41,12 @@ class MealsAdapter(private var list: List<Meal>, val onClick: OnClickMeal)
         holder.itemView.apply {
             holder.tv_meal_name.text = list[position].strMeal
             Glide.with(holder.itemView).load(list[position].strMealThumb).into(holder.img_meal)
+
+            val layoutParams = holder.img_meal.layoutParams
+            layoutParams.width = imageWidth
+            layoutParams.height = imageHeight
+            holder.img_meal.layoutParams = layoutParams
+
             holder.itemView.setOnClickListener {
                 onClick.onClick(position)
             }

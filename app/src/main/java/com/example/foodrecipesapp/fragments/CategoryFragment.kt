@@ -1,14 +1,17 @@
 package com.example.foodrecipesapp.fragments
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.activity.CategoriesActivity
 import com.example.foodrecipesapp.ViewModel.HomeViewModel
 import com.example.foodrecipesapp.adapter.CategoryAdapter
@@ -62,7 +65,22 @@ class CategoryFragment : Fragment() {
         }
 
     }
-
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Xác định kích thước mới của hình ảnh khi xoay ngang
+            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape)
+            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape)
+            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+            categoryAdapter.setSize(newImageWidth, newImageHeight)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Xác định kích thước mới của hình ảnh khi xoay dọc
+            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_portrait_cate2)
+            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_portrait_cate2)
+            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+            categoryAdapter.setSize(newImageWidth, newImageHeight)
+        }
+    }
     private fun onClickCategory(pos: Int, categories: List<Category>) {
         val i = Intent(requireContext(), CategoriesActivity::class.java)
         val bundle = Bundle()

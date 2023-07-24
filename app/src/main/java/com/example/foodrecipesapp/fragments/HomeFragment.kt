@@ -1,11 +1,13 @@
 package com.example.foodrecipesapp.fragments
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -144,6 +146,23 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
        bottomSheetFragment?.dismiss()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Xác định kích thước mới của hình ảnh khi xoay ngang
+            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape)
+            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape)
+            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+            categoryAdapter.setSize(newImageWidth, newImageHeight)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Xác định kích thước mới của hình ảnh khi xoay dọc
+            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_portrait_cate)
+            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_portrait_cate)
+            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+            categoryAdapter.setSize(newImageWidth, newImageHeight)
+        }
     }
 
     private fun searchMeal(meal: MealResponse) {

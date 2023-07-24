@@ -15,6 +15,13 @@ import com.example.foodrecipesapp.data.MealDetail
 class MealFavAdapter: RecyclerView.Adapter<MealFavAdapter.MealFavViewHolder>() {
     private var favList:List<MealDetail> = ArrayList()
     private lateinit var onClick: onItemClick
+    private var imageWidth: Int = 495
+    private var imageHeight: Int = 495
+    fun setSize(width: Int, height: Int){
+        imageWidth = width
+        imageHeight = height
+        notifyDataSetChanged()
+    }
     fun setOnItemClick(onClick: onItemClick){
         this.onClick = onClick
     }
@@ -44,6 +51,12 @@ class MealFavAdapter: RecyclerView.Adapter<MealFavAdapter.MealFavViewHolder>() {
         holder.itemView.apply {
             holder.tv_meal_name.text = favList[position].strMeal
             Glide.with(holder.itemView).load(favList[position].strMealThumb).into(holder.imgFav)
+
+            // Cập nhật kích thước cho ImageView
+            val layoutParams = holder.imgFav.layoutParams
+            layoutParams.width = imageWidth
+            layoutParams.height = imageHeight
+            holder.imgFav.layoutParams = layoutParams
 
             holder.itemView.setOnClickListener {
                 onClick.onClick(position)
