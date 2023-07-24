@@ -27,5 +27,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:paddingStart="25dp"/>
+        android:padding="5dp"/>
 </LinearLayout>

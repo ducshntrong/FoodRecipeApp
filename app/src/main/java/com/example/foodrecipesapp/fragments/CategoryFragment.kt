@@ -70,30 +70,30 @@ class CategoryFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        val key = if (isLandscape) "image_size_landscape_cate2" else "image_size_portrait_cate2"
-        val imageSize = if (isLandscape) resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
-        else resources.getDimensionPixelSize(R.dimen.image_width_portrait_cate2)
-        sharedPreferences.edit().putInt(key, imageSize).apply()
+//        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+//        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+//        val key = if (isLandscape) "image_size_landscape_cate2" else "image_size_portrait_cate2"
+//        val imageSize = if (isLandscape) resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
+//        else resources.getDimensionPixelSize(R.dimen.image_width_portrait_cate2)
+//        sharedPreferences.edit().putInt(key, imageSize).apply()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Xác định kích thước mới của hình ảnh khi xoay ngang
-            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
-            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape2)
-            // Cập nhật lại kích thước cho ImageView trong ViewHolder
-            categoryAdapter.setSize(newImageWidth, newImageHeight)
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // Xác định kích thước mới của hình ảnh khi xoay dọc
-            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_portrait_cate2)
-            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_portrait_cate2)
-            // Cập nhật lại kích thước cho ImageView trong ViewHolder
-            categoryAdapter.setSize(newImageWidth, newImageHeight)
-        }
-    }
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            // Xác định kích thước mới của hình ảnh khi xoay ngang
+//            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
+//            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape2)
+//            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+//            categoryAdapter.setSize(newImageWidth, newImageHeight)
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            // Xác định kích thước mới của hình ảnh khi xoay dọc
+//            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_portrait_cate2)
+//            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_portrait_cate2)
+//            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+//            categoryAdapter.setSize(newImageWidth, newImageHeight)
+//        }
+//    }
     private fun onClickCategory(pos: Int, categories: List<Category>) {
         val i = Intent(requireContext(), CategoriesActivity::class.java)
         val bundle = Bundle()

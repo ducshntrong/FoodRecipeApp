@@ -18,23 +18,23 @@ import com.example.foodrecipesapp.data.MealDetail
 class MealFavAdapter(context: Context): RecyclerView.Adapter<MealFavAdapter.MealFavViewHolder>() {
     private var favList:List<MealDetail> = ArrayList()
     private lateinit var onClick: onItemClick
-    private var imageWidth: Int = 495
-    private var imageHeight: Int = 495
-    fun setSize(width: Int, height: Int){
-        imageWidth = width
-        imageHeight = height
-        notifyDataSetChanged()
-    }
-    init {
-        // Lấy kích thước hiện tại của màn hình từ SharedPreferences
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        val key = if (isLandscape) "image_size_landscape_fav" else "image_size_portrait_fav"
-        val defaultValue = if (isLandscape) 960 else 495
-        val imageSize = sharedPreferences.getInt(key, defaultValue)
-        imageWidth = imageSize
-        imageHeight = imageSize
-    }
+//    private var imageWidth: Int = 495
+//    private var imageHeight: Int = 495
+//    fun setSize(width: Int, height: Int){
+//        imageWidth = width
+//        imageHeight = height
+//        notifyDataSetChanged()
+//    }
+//    init {
+//        // Lấy kích thước hiện tại của màn hình từ SharedPreferences
+//        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+//        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+//        val key = if (isLandscape) "image_size_landscape_fav" else "image_size_portrait_fav"
+//        val defaultValue = if (isLandscape) 960 else 495
+//        val imageSize = sharedPreferences.getInt(key, defaultValue)
+//        imageWidth = imageSize
+//        imageHeight = imageSize
+//    }
     fun setOnItemClick(onClick: onItemClick){
         this.onClick = onClick
     }
@@ -65,11 +65,11 @@ class MealFavAdapter(context: Context): RecyclerView.Adapter<MealFavAdapter.Meal
             holder.tv_meal_name.text = favList[position].strMeal
             Glide.with(holder.itemView).load(favList[position].strMealThumb).into(holder.imgFav)
 
-            // Cập nhật kích thước cho ImageView
-            val layoutParams = holder.imgFav.layoutParams
-            layoutParams.width = imageWidth
-            layoutParams.height = imageHeight
-            holder.imgFav.layoutParams = layoutParams
+//            // Cập nhật kích thước cho ImageView
+//            val layoutParams = holder.imgFav.layoutParams
+//            layoutParams.width = imageWidth
+//            layoutParams.height = imageHeight
+//            holder.imgFav.layoutParams = layoutParams
 
             holder.itemView.setOnClickListener {
                 onClick.onClick(position)

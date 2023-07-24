@@ -15,23 +15,23 @@ import com.example.foodrecipesapp.data.Category
 
 class CategoryAdapter(context: Context,private var listCate: List<Category>, val onClickItem: OnClickCategory):
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
-    private var imageWidth: Int = 413
-    private var imageHeight: Int = 426
-    fun setSize(width: Int, height: Int){
-        imageWidth = width
-        imageHeight = height
-        notifyDataSetChanged()
-    }
-    init {
-        // Lấy kích thước hiện tại của màn hình từ SharedPreferences
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        val key = if (isLandscape) "image_size_landscape_cate" else "image_size_portrait_cate"
-        val defaultValue = if (isLandscape) 935 else 426
-        val imageSize = sharedPreferences.getInt(key, defaultValue)
-        imageWidth = imageSize
-        imageHeight = imageSize
-    }
+//    private var imageWidth: Int = 413
+//    private var imageHeight: Int = 426
+//    fun setSize(width: Int, height: Int){
+//        imageWidth = width
+//        imageHeight = height
+//        notifyDataSetChanged()
+//    }
+//    init {
+//        // Lấy kích thước hiện tại của màn hình từ SharedPreferences
+//        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+//        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+//        val key = if (isLandscape) "image_size_landscape_cate" else "image_size_portrait_cate"
+//        val defaultValue = if (isLandscape) 935 else 426
+//        val imageSize = sharedPreferences.getInt(key, defaultValue)
+//        imageWidth = imageSize
+//        imageHeight = imageSize
+//    }
 
     fun setCategoryList(listCate: List<Category>){
         this.listCate = listCate
@@ -61,10 +61,10 @@ class CategoryAdapter(context: Context,private var listCate: List<Category>, val
             holder.txtCateName.text = listCate[position].strCategory
             Glide.with(holder.itemView).load(listCate[position].strCategoryThumb).into(holder.CateImg)
 
-            val layoutParams = holder.CateImg.layoutParams
-            layoutParams.width = imageWidth
-            layoutParams.height = imageHeight
-            holder.CateImg.layoutParams = layoutParams
+//            val layoutParams = holder.CateImg.layoutParams
+//            layoutParams.width = imageWidth
+//            layoutParams.height = imageHeight
+//            holder.CateImg.layoutParams = layoutParams
 
             holder.itemView.setOnClickListener {
                 onClickItem.onClickCate(position)

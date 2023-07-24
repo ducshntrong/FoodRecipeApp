@@ -78,32 +78,32 @@ class CategoriesActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         dialog?.dismiss()
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        val key = if (isLandscape) "image_size_landscape_meal" else "image_size_portrait_meal"
-        val imageSize = if (isLandscape) resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
-        else resources.getDimensionPixelSize(R.dimen.image_height_portrait_mealCard)
-        sharedPreferences.edit().putInt(key, imageSize).apply()
+//        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+//        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+//        val key = if (isLandscape) "image_size_landscape_meal" else "image_size_portrait_meal"
+//        val imageSize = if (isLandscape) resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
+//        else resources.getDimensionPixelSize(R.dimen.image_height_portrait_mealCard)
+//        sharedPreferences.edit().putInt(key, imageSize).apply()
     }
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        val newImageWidth:Int
-        val newImageHeight:Int
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Xác định kích thước mới của hình ảnh khi xoay ngang
-            newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
-            newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape2)
-            // Cập nhật lại kích thước cho ImageView trong ViewHolder
-            mealsAdapter.setSize(newImageWidth, newImageHeight)
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // Xác định kích thước mới của hình ảnh khi xoay dọc
-            newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_portrait_mealCard)
-            newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_portrait_mealCard)
-            // Cập nhật lại kích thước cho ImageView trong ViewHolder
-            mealsAdapter.setSize(newImageWidth, newImageHeight)
-        }
-
-    }
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//        val newImageWidth:Int
+//        val newImageHeight:Int
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            // Xác định kích thước mới của hình ảnh khi xoay ngang
+//            newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
+//            newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape2)
+//            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+//            mealsAdapter.setSize(newImageWidth, newImageHeight)
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            // Xác định kích thước mới của hình ảnh khi xoay dọc
+//            newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_portrait_mealCard)
+//            newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_portrait_mealCard)
+//            // Cập nhật lại kích thước cho ImageView trong ViewHolder
+//            mealsAdapter.setSize(newImageWidth, newImageHeight)
+//        }
+//
+//    }
 
     private fun searchMeal(meal: MealResponse) {
         binding.searchMeal.setOnQueryTextListener(object :OnQueryTextListener,
