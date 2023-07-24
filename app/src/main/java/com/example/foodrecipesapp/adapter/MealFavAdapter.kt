@@ -1,6 +1,9 @@
 package com.example.foodrecipesapp.adapter
 
+import android.content.Context
+import android.content.res.Configuration
 import android.graphics.BitmapFactory
+import android.preference.PreferenceManager
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.data.MealDetail
 
-class MealFavAdapter: RecyclerView.Adapter<MealFavAdapter.MealFavViewHolder>() {
+class MealFavAdapter(context: Context): RecyclerView.Adapter<MealFavAdapter.MealFavViewHolder>() {
     private var favList:List<MealDetail> = ArrayList()
     private lateinit var onClick: onItemClick
     private var imageWidth: Int = 495
@@ -21,6 +24,16 @@ class MealFavAdapter: RecyclerView.Adapter<MealFavAdapter.MealFavViewHolder>() {
         imageWidth = width
         imageHeight = height
         notifyDataSetChanged()
+    }
+    init {
+        // Lấy kích thước hiện tại của màn hình từ SharedPreferences
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val key = if (isLandscape) "image_size_landscape_fav" else "image_size_portrait_fav"
+        val defaultValue = if (isLandscape) 960 else 495
+        val imageSize = sharedPreferences.getInt(key, defaultValue)
+        imageWidth = imageSize
+        imageHeight = imageSize
     }
     fun setOnItemClick(onClick: onItemClick){
         this.onClick = onClick

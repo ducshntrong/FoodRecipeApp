@@ -1,8 +1,10 @@
 package com.example.foodrecipesapp.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +33,7 @@ class FavoriteMealsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentFavoriteMealsBinding.inflate(layoutInflater)
-        mealFavAdapter = MealFavAdapter()
+        mealFavAdapter = MealFavAdapter(requireContext())
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,13 +100,21 @@ class FavoriteMealsFragment : Fragment() {
         }
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.favRecView)
     }
-
+    override fun onPause() {
+        super.onPause()
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val key = if (isLandscape) "image_size_landscape_fav" else "image_size_portrait_fav"
+        val imageSize = if (isLandscape) resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
+        else resources.getDimensionPixelSize(R.dimen.image_height_portrait_fav)
+        sharedPreferences.edit().putInt(key, imageSize).apply()
+    }
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // Xác định kích thước mới của hình ảnh khi xoay ngang
-            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape)
-            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape)
+            val newImageWidth = resources.getDimensionPixelSize(R.dimen.image_width_landscape2)
+            val newImageHeight = resources.getDimensionPixelSize(R.dimen.image_height_landscape2)
             // Cập nhật lại kích thước cho ImageView trong ViewHolder
             mealFavAdapter.setSize(newImageWidth, newImageHeight)
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {

@@ -1,5 +1,8 @@
 package com.example.foodrecipesapp.adapter
 
+import android.content.Context
+import android.content.res.Configuration
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.data.Meal
 
-class MealsAdapter(private var list: List<Meal>, val onClick: OnClickMeal)
+class MealsAdapter(context: Context,private var list: List<Meal>, val onClick: OnClickMeal)
     :RecyclerView.Adapter<MealsAdapter.MealViewHolder>(){
     private lateinit var onLongClick: OnLongClickMeal
     private var imageWidth: Int = 492
@@ -19,6 +22,16 @@ class MealsAdapter(private var list: List<Meal>, val onClick: OnClickMeal)
         imageWidth = width
         imageHeight = height
         notifyDataSetChanged()
+    }
+    init {
+        // Lấy kích thước hiện tại của màn hình từ SharedPreferences
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val key = if (isLandscape) "image_size_landscape_meal" else "image_size_portrait_meal"
+        val defaultValue = if (isLandscape) 960 else 605
+        val imageSize = sharedPreferences.getInt(key, defaultValue)
+        imageWidth = imageSize
+        imageHeight = imageSize
     }
     fun setOnLongClickMeal(onLongClick: OnLongClickMeal){
         this.onLongClick = onLongClick

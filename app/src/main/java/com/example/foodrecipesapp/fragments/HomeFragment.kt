@@ -1,8 +1,11 @@
 package com.example.foodrecipesapp.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -127,7 +130,7 @@ class HomeFragment : Fragment() {
 //        }
 
         homeViewModel.observeAllCategory().observe(viewLifecycleOwner){
-            categoryAdapter = CategoryAdapter(it.categories, object: CategoryAdapter.OnClickCategory{
+            categoryAdapter = CategoryAdapter(requireContext(),it.categories, object: CategoryAdapter.OnClickCategory{
                 override fun onClickCate(pos: Int) {
                     val i = Intent(requireContext(), CategoriesActivity::class.java)
                     val bundle = Bundle()
@@ -146,7 +149,14 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
        bottomSheetFragment?.dismiss()
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val key = if (isLandscape) "image_size_landscape_cate" else "image_size_portrait_cate"
+        val imageSize = if (isLandscape) resources.getDimensionPixelSize(R.dimen.image_width_landscape)
+            else resources.getDimensionPixelSize(R.dimen.image_height_portrait_cate)
+        sharedPreferences.edit().putInt(key, imageSize).apply()
     }
+
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
