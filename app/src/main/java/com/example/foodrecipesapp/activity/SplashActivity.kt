@@ -13,6 +13,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        binding.btnGetStarted.setOnClickListener {
+//            val i = Intent(this, MainActivity2::class.java)
+//            startActivity(i)
+//            finish()
+//        }
+
         binding.btnGetStarted.setOnClickListener {
             auth = FirebaseAuth.getInstance()
             val user = auth.currentUser
@@ -21,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(i)
                 finish()
             }else{
-                val i = Intent(this, LoginActivity::class.java)
+                val i = Intent(this, MainActivity2::class.java)
                 startActivity(i)
                 finish()
             }

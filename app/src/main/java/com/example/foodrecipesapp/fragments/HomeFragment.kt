@@ -23,6 +23,7 @@ import com.example.foodrecipesapp.ViewModel.HomeViewModel
 import com.example.foodrecipesapp.activity.CategoriesActivity
 import com.example.foodrecipesapp.activity.LoginActivity
 import com.example.foodrecipesapp.activity.MealDetailesActivity
+import com.example.foodrecipesapp.activity.SplashActivity
 import com.example.foodrecipesapp.adapter.CategoryAdapter
 import com.example.foodrecipesapp.adapter.PopularAdapter
 import com.example.foodrecipesapp.data.*
@@ -77,12 +78,12 @@ class HomeFragment : Fragment() {
         onRandomMealClick()
         onRandomMealLongClick()
 
-        binding.imgLogout.setOnClickListener {
-            auth.signOut()
-            val i = Intent(requireActivity(), LoginActivity::class.java)
-            startActivity(i)
-            activity?.finish()
-        }
+//        binding.imgLogout.setOnClickListener {
+//            auth.signOut()
+//            val i = Intent(requireActivity(), SplashActivity::class.java)
+//            startActivity(i)
+//            activity?.finish()
+//        }
 
         homeViewModel.observeRandomMeal().observe(viewLifecycleOwner) {
             val imageUrl = it!!.meals[0].strMealThumb//!! giá trị not null

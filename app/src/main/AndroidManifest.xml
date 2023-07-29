@@ -5,9 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -20,10 +18,13 @@
         android:theme="@style/Theme.EasyFood"
         tools:targetApi="31">
         <activity
+            android:name=".activity.MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".activity.ChangePassActivity"
-            android:exported="false"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"/>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.UpdateRecipeActivity"
             android:exported="false" />
@@ -35,21 +36,21 @@
             android:exported="false" />
         <activity
             android:name=".activity.SignupActivity"
-            android:exported="false"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"/>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="false"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"/>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MealDetailesActivity"
             android:exported="false" />
         <activity
             android:name=".activity.CategoriesActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false" />
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true">
@@ -61,9 +62,9 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
-            android:windowSoftInputMode="adjustNothing"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>
