@@ -22,6 +22,9 @@ class HomeViewModel: ViewModel() {
     }
 
     private fun getRandomMeal() {
+        //gọi phương thức getRandomMeal() trên đối tượng foodApi của lớp Retrofit để lấy danh sách data.
+        //Hàm enqueue() được sử dụng để thực hiện cuộc gọi bất đồng bộ và chạy trên một thread riêng.
+        //Nó nhận vào một đối tượng Callback để xử lý kết quả trả về từ server.
         Retrofit.foodApi.getRandomMeal().enqueue(object : Callback<RandomMealsResponse> {
             override fun onResponse(call: Call<RandomMealsResponse>, response: Response<RandomMealsResponse>, ) {
                 mutableRandomMeal.value = response.body()

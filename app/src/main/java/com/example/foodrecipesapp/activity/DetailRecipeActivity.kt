@@ -86,8 +86,11 @@ class DetailRecipeActivity : AppCompatActivity() {
                 dbRef.removeValue()
                     .addOnSuccessListener {
                         Toast.makeText(context, "Delete successfully", Toast.LENGTH_SHORT).show()
-                        storageRef.child(recipe.idMeal!!).delete()//xoá img của recipe vừa xoá trong storage
+                        //storageRef.child(recipe.idMeal!!).delete()//xoá img của recipe vừa xoá trong storage
                         finish()
+                        if(detailModel.isMealSavedInDatabase(recipe.idMeal!!)){
+                            detailModel.deleteMealById(recipe.idMeal!!)
+                        }
                     }
                     .addOnFailureListener { err ->
                         Toast.makeText(context, err.message, Toast.LENGTH_SHORT).show()

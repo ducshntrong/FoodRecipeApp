@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodrecipesapp.ViewModel.DetailModel
 import com.example.foodrecipesapp.adapter.MyRecipeAdapter
 import com.example.foodrecipesapp.data.MealDB
+import com.example.foodrecipesapp.data.MealDetail
 import com.example.foodrecipesapp.databinding.FragmentMyRecipeBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +26,7 @@ class MyRecipeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var storageRef: StorageReference
     private lateinit var ds: ArrayList<MealDB>
+    lateinit var detailModel: DetailModel
     lateinit var myRecipeAdapter: MyRecipeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,8 @@ class MyRecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        detailModel = ViewModelProvider(this)[DetailModel::class.java]
 
         auth = FirebaseAuth.getInstance()
         dbRef = FirebaseDatabase.getInstance().getReference("users/${auth.currentUser?.uid}/recipes")
@@ -67,7 +73,10 @@ class MyRecipeFragment : Fragment() {
                 val mealID = myRecipeAdapter.getIdByPosition(position)
                 val meal = myRecipeAdapter.getMealByPosition(position)
                 dbRef.child(mealID).removeValue()
-                storageRef.child(mealID).delete()
+                //storageRef.child(mealID).delete()
+                if(detailModel.isMealSavedInDatabase(mealID)){
+                    detailModel.deleteMealById(mealID)
+                }
                 showDeleteSnackBar(mealID,meal)
             }
         }
@@ -83,6 +92,9 @@ class MyRecipeFragment : Fragment() {
         Snackbar.make(requireView(), "Meal was deleted", Snackbar.LENGTH_LONG).apply {
             setAction("Undo") {
                 dbRef.child(mealId).setValue(meal)
+                val recipe = MealDetail(meal.idMeal!!,auth.currentUser?.uid.toString(),meal.strArea!!,meal.strIngredients!!,
+                    meal.strInstructions!!, meal.strMeal!!,meal.strMealThumb!!,meal.strYoutube!!)
+                detailModel.insertFav(recipe)
             }.show()
         }
     }

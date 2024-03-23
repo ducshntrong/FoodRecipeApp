@@ -7,7 +7,8 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface FoodApi {
+interface FoodApi {//interface UserAPI sử dụng Retrofit để gọi một API trên server để lấy danh sách data.
+//sử dụng annotation @GET để xác định phương thức HTTP được sử dụng để gọi API, và đường dẫn tới API là "random.php".
     @GET("random.php")
     fun getRandomMeal(): Call<RandomMealsResponse>
 
