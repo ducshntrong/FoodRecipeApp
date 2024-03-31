@@ -69,4 +69,5 @@ Download apk: https://www.mediafire.com/file/l491jju62nwxgao/FoodRecipesApp.apk/
 - view binding : instead of inflating views manually view binding will take care of that.
 - Glide : Catch images and load them in imageView.
 - Firebase : User can register an account, recipes CRUD
+  
 For Feedback or Suggestions Mail Me At huynhtrongduc01225445811@gmail.com 🙂
