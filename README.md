@@ -4,7 +4,7 @@ FoodRecipeApp is an app that makes making food easier and gives you full informa
 🍱 A Food Recipes App using Kotlin &amp; API (https://www.themealdb.com/api.php) to view food blogs along with their recipes.
 
 # Preview
-Download apk: https://www.mediafire.com/file/7g0zi0zzpboxhbb/app-debug.apk/file
+Download apk: https://www.mediafire.com/file/l491jju62nwxgao/FoodRecipesApp.apk/file
 
 <table style="width:100%">
   <tr>
@@ -69,3 +69,5 @@ Download apk: https://www.mediafire.com/file/7g0zi0zzpboxhbb/app-debug.apk/file
 - view binding : instead of inflating views manually view binding will take care of that.
 - Glide : Catch images and load them in imageView.
 - Firebase : User can register an account, recipes CRUD
+  
+For Feedback or Suggestions Mail Me At huynhtrongduc01225445811@gmail.com 
