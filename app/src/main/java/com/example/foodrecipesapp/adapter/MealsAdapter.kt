@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.data.Meal
+import com.google.android.material.card.MaterialCardView
 
 class MealsAdapter(context: Context,private var list: List<Meal>, val onClick: OnClickMeal)
     :RecyclerView.Adapter<MealsAdapter.MealViewHolder>(){
@@ -39,6 +40,7 @@ class MealsAdapter(context: Context,private var list: List<Meal>, val onClick: O
     class MealViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tv_meal_name = itemView.findViewById<TextView>(R.id.tv_meal_name)
         val img_meal = itemView.findViewById<ImageView>(R.id.img_meal)
+        val mealCard = itemView.findViewById<MaterialCardView>(R.id.mealCard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
@@ -51,7 +53,7 @@ class MealsAdapter(context: Context,private var list: List<Meal>, val onClick: O
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
-        holder.itemView.apply {
+        holder.mealCard.apply {
             holder.tv_meal_name.text = list[position].strMeal
             Glide.with(holder.itemView).load(list[position].strMealThumb).into(holder.img_meal)
 
@@ -60,10 +62,10 @@ class MealsAdapter(context: Context,private var list: List<Meal>, val onClick: O
 //            layoutParams.height = imageHeight
 //            holder.img_meal.layoutParams = layoutParams
 
-            holder.itemView.setOnClickListener {
+            holder.mealCard.setOnClickListener {
                 onClick.onClick(position)
             }
-            holder.itemView.setOnLongClickListener {
+            holder.mealCard.setOnLongClickListener {
                 onLongClick.onLongClick(list[position])
                 true
             }

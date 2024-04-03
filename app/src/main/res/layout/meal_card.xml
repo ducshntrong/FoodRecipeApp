@@ -7,10 +7,13 @@
     android:layout_height="wrap_content">
 
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="9dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/mealCard"
         app:cardCornerRadius="13dp"
         app:cardElevation="10dp">
 
@@ -20,7 +23,7 @@
             android:scaleType="centerCrop"
             android:layout_height="220dp"
             android:src="@drawable/mealtest"/>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tv_meal_name"
